@@ -1,4 +1,4 @@
 ballgamevenv
 .mypy_cache
-src/ball_game/__pycache__
+__pycache__
 .DS_Store
