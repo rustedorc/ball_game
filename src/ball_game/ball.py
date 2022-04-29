@@ -80,6 +80,10 @@ class BallContainer:
     def add_ball(self, ball: Ball) -> None:
         self.container.append(ball)
     
+    def remove_ball(self, *balls: Ball) -> None:
+        for ball in balls:
+            self.container.remove(ball)
+    
     def update(self) -> None:
         self.detect_collisions()
         for ball in self.container:
@@ -97,8 +101,7 @@ class BallContainer:
                 args: tuple[int, int, int, pg.surface.Surface, tuple[int, int, int]] = ((b1.x + b2.x) // 2, (b1.y + b2.y) // 2, b1.radius + b2.radius, b1.screen, COLOURS['yellow'])
                 self.add_ball(Ball(*args))
                 try:
-                    self.container.remove(b1)
-                    self.container.remove(b2)
+                    self.remove_ball(b1, b2)
                 except ValueError:
                     pass
 
