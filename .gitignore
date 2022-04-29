@@ -2,3 +2,4 @@ ballgamevenv
 .mypy_cache
 __pycache__
 .DS_Store
+.pytest_cache
