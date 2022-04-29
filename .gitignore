@@ -3,3 +3,4 @@ ballgamevenv
 __pycache__
 .DS_Store
 .pytest_cache
+Ball_Game.egg-info
