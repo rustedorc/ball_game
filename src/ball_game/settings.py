@@ -13,5 +13,6 @@ COLOURS = {'black':(0,0,0),
 
 BALL_COLOURS = {key:value for key, value in COLOURS.items() if key != 'black'}
 
-GRAVITY = 9.8
+GRAVITY = HEIGHT / (FPS ** 2)
 SPEED_MULTIPLIER = 5
+ENERGY_LOSS = 0.95

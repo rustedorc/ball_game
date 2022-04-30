@@ -30,6 +30,9 @@ class Game:
                 if event.type == pg.QUIT:
                     running = False
                 
+                elif event.type == pg.MOUSEBUTTONDOWN:
+                    pos = pg.mouse.get_pos()
+                
                 elif event.type == pg.MOUSEBUTTONUP:
                     x, y = pg.mouse.get_pos()
                     self.ball_container.add_ball(Ball(x, y, 10, self.screen, COLOURS['yellow']))

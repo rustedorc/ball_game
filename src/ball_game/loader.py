@@ -27,3 +27,4 @@ class Loader:
         font_directory = self.assets_path / 'fonts'
         for path in font_directory.iterdir():
             self.fonts[path.stem] = Font(path)
+        return self.fonts

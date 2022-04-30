@@ -6,7 +6,7 @@ from typing import Optional, NamedTuple
 from itertools import combinations
 import random
 
-from .settings import FPS, GRAVITY, HEIGHT, WIDTH, SPEED_MULTIPLIER, COLOURS, BALL_COLOURS
+from .settings import FPS, GRAVITY, HEIGHT, WIDTH, SPEED_MULTIPLIER, COLOURS, BALL_COLOURS, ENERGY_LOSS
 
 class Coordinates(NamedTuple):
     x: int
@@ -29,7 +29,8 @@ class Ball:
 
         self.current_direction: Vector = self.down
 
-        self.kinematics = {letter:float('inf') for letter in 'SUVAT'}
+        self.dy = 1
+        self.dx = 0.25
         
     def __repr__(self) -> str:
         return f'Ball(x={self.x}, y={self.y}, radius={self.radius}, colour={self.colour})'
@@ -38,24 +39,16 @@ class Ball:
         pg.draw.circle(self.screen, self.colour, (self.x, self.y), self.radius)
     
     def update(self):
-        #s = ut + 0.5at^2 NO
-        #v^2 = u^2 + 2as
-        if self.y >= (HEIGHT - self.radius):
-            self.current_direction = self.up + random.choice((self.left, self.right, self.null_position))
-            self.colour = random.choice(list(BALL_COLOURS.values()))
-        elif self.y <= self.radius:
-            self.current_direction = self.down + random.choice((self.left, self.right, self.null_position))
-            self.colour = random.choice(list(BALL_COLOURS.values()))
-        
-        if self.x <= self.radius:
-            self.current_direction = self.right + random.choice((self.up, self.down, self.null_position))
-            self.colour = random.choice(list(BALL_COLOURS.values()))
-        elif self.x >= (WIDTH - self.radius):
-            self.current_direction = self.left + random.choice((self.up, self.down, self.null_position))
-            self.colour = random.choice(list(BALL_COLOURS.values()))
+        self.y += self.dy
+        self.x += self.dx
+        self.dy += GRAVITY
 
+        if self.y >= (HEIGHT - self.radius):
+            self.dy = (-self.dy * ENERGY_LOSS)
+            self.y = HEIGHT - self.radius
         
-        self.x, self.y = (self.x + self.current_direction.x) , (self.y + self.current_direction.y)
+        if self.x >= (WIDTH - self.radius) or self.x <= self.radius:
+            self.dx = -self.dx
 
     
     def collision(self, ball: Ball) -> bool:
@@ -64,6 +57,7 @@ class Ball:
         the two centres is less than the sum of the two radiuses"""
         return ((self.x - ball.x) ** 2) + ((self.y - ball.y) ** 2) < ((self.radius + ball.radius) ** 2)
     
+class Player(Ball):...        
 
 class BallContainer:
     def __init__(self, *balls: Ball, container:Optional[list[Ball]] = None) -> None:
@@ -116,6 +110,6 @@ class BallContainer:
         """Generate a boolean depending on the balls colour
         combine = True
         destroy = False"""
-        return b1.colour != b2.colour
+        return bool(random.randbytes(1))
 
                     
