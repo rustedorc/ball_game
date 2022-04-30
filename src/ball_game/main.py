@@ -1,7 +1,7 @@
 import pygame as pg
 import sys
 from .settings import FPS, WIDTH, HEIGHT, CAPTION, COLOURS
-from .loader import load_music
+from .loader import Loader
 from .ball import Ball, BallContainer
 
 class Game:
@@ -12,7 +12,12 @@ class Game:
         pg.display.set_caption(CAPTION)
         self.clock = pg.time.Clock()
 
-        self.music = load_music(pg.mixer)
+        self.loader = Loader()
+        self.music = self.loader.load_music()
+        self.images = self.loader.load_images()
+        self.fonts = self.loader.load_fonts()
+
+        self.mute_sounds()
 
         self.ball_container = BallContainer()
     
@@ -45,3 +50,7 @@ class Game:
         
         pg.quit()
         sys.exit()
+
+    def mute_sounds(self):
+        for sound in self.music.values():
+            sound.set_volume(0.0)

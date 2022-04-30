@@ -100,7 +100,7 @@ class BallContainer:
                 continue
             
             if b1.collision(b2):
-                if self.combine_or_destroy():
+                if self.combine_or_destroy(b1, b2):
                     args: tuple[int, int, int, pg.surface.Surface, tuple[int, int, int]] = ((b1.x + b2.x) // 2, (b1.y + b2.y) // 2, b1.radius + b2.radius, b1.screen, COLOURS['yellow'])
                     self.add_ball(Ball(*args))
                 try:
@@ -112,10 +112,10 @@ class BallContainer:
                 hits.append(False)
         return hits
     
-    def combine_or_destroy(self) -> bool:
-        """Generate a random boolean
+    def combine_or_destroy(self, b1: Ball, b2: Ball) -> bool:
+        """Generate a boolean depending on the balls colour
         combine = True
         destroy = False"""
-        return bool(random.getrandbits(1))
+        return b1.colour != b2.colour
 
                     
