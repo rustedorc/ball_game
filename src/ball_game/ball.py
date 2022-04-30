@@ -63,7 +63,7 @@ class Ball:
         uses a^2 + b^2 = c^2 and checks if the distance between
         the two centres is less than the sum of the two radiuses"""
         return ((((self.x - ball.x) ** 2) + (self.y - ball.y) ** 2) ** (1/2)) < (self.radius + ball.radius)
-
+    
 
 class BallContainer:
     def __init__(self, *balls: Ball, container:Optional[list[Ball]] = None) -> None:
