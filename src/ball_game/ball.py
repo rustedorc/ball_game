@@ -62,7 +62,7 @@ class Ball:
         """Checks if two balls have collided
         uses a^2 + b^2 = c^2 and checks if the distance between
         the two centres is less than the sum of the two radiuses"""
-        return ((((self.x - ball.x) ** 2) + (self.y - ball.y) ** 2) ** (1/2)) < (self.radius + ball.radius)
+        return ((self.x - ball.x) ** 2) + ((self.y - ball.y) ** 2) < ((self.radius + ball.radius) ** 2)
     
 
 class BallContainer:
