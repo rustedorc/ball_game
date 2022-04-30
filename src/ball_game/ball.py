@@ -84,25 +84,38 @@ class BallContainer:
         for ball in balls:
             self.container.remove(ball)
     
-    def update(self) -> None:
-        self.detect_collisions()
+    def update(self) -> bool:
+        hits = self.detect_collisions()
         for ball in self.container:
             ball.update()
+        return any(hits)
     
     def reset_container(self) -> None:
         self.container = []
     
-    def detect_collisions(self) -> None:
+    def detect_collisions(self) -> list[bool]:
+        hits = []
         for b1, b2 in combinations(self.container, 2):
             if b1 is b2:
                 continue
             
             if b1.collision(b2):
-                args: tuple[int, int, int, pg.surface.Surface, tuple[int, int, int]] = ((b1.x + b2.x) // 2, (b1.y + b2.y) // 2, b1.radius + b2.radius, b1.screen, COLOURS['yellow'])
-                self.add_ball(Ball(*args))
+                if self.combine_or_destroy():
+                    args: tuple[int, int, int, pg.surface.Surface, tuple[int, int, int]] = ((b1.x + b2.x) // 2, (b1.y + b2.y) // 2, b1.radius + b2.radius, b1.screen, COLOURS['yellow'])
+                    self.add_ball(Ball(*args))
                 try:
                     self.remove_ball(b1, b2)
                 except ValueError:
                     pass
+                hits.append(True)
+            else:
+                hits.append(False)
+        return hits
+    
+    def combine_or_destroy(self) -> bool:
+        """Generate a random boolean
+        combine = True
+        destroy = False"""
+        return bool(random.getrandbits(1))
 
                     

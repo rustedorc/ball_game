@@ -1,14 +1,18 @@
 import pygame as pg
 import sys
 from .settings import FPS, WIDTH, HEIGHT, CAPTION, COLOURS
+from .loader import load_music
 from .ball import Ball, BallContainer
 
 class Game:
     def __init__(self) -> None:
         pg.init()
+        pg.mixer.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(CAPTION)
         self.clock = pg.time.Clock()
+
+        self.music = load_music(pg.mixer)
 
         self.ball_container = BallContainer()
     
@@ -29,7 +33,9 @@ class Game:
                     if event.key == pg.K_SPACE:
                         self.ball_container.reset_container()
             
-            self.ball_container.update()
+            hits = self.ball_container.update()
+            if hits:
+                self.music['pew'].play()
             
             self.screen.fill(COLOURS['black'])
 
