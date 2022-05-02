@@ -6,7 +6,7 @@ from pygame.font import Font
 
 class Loader:
     def __init__(self) -> None:
-        self.assets_path = pathlib.Path(__file__).parent.parent.parent / 'assets'
+        self.assets_path = pathlib.Path(__file__).parent.parent / 'assets'
         self.music = {}
         self.images = {}
         self.fonts = {}

@@ -7,9 +7,9 @@ Create a clone of the repositry on your device
 ```bash
 git clone https://github.com/rustedorc/ball_game.git
 ```
-Navigate to the src directory
+Navigate to the directory containing setup.py
 ```bash
-cd ball_game/src
+cd ball_game
 ```
 Install via the Python Package Manager
 ```bash
