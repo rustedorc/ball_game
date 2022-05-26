@@ -10,6 +10,9 @@ class Loader:
         self.music = {}
         self.images = {}
         self.fonts = {}
+    
+    def load(self) -> tuple[dict[str, Sound], dict[str, Surface], dict[str, Font]]:
+        return self.load_music(), self.load_images(), self.load_fonts()
 
     def load_music(self) -> dict[str, Sound]:
         music_directory = self.assets_path / 'music'

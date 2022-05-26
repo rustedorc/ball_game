@@ -13,10 +13,7 @@ class Game:
         self.clock = pg.time.Clock()
 
         self.loader = Loader()
-        self.music = self.loader.load_music()
-        self.images = self.loader.load_images()
-        self.fonts = self.loader.load_fonts()
-
+        self.music, self.images, self.fonts = self.loader.load()
         self.mute_sounds()
 
         self.ball_container = BallContainer()
